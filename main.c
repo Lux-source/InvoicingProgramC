@@ -71,8 +71,8 @@ void introduce_new_item(Item **items, int *number_of_items) {
     new_item.price = read_float("Enter the price: ");
 
     printf("Enter the description: ");
-    getchar();  // To clear the input buffer
-
+    fgets(new_item.description, 150, stdin);
+    new_item.description[strcspn(new_item.description, "\n")] = 0;
 
     Item *temp = (Item *) realloc(*items, (*number_of_items + 1) * sizeof(Item));
     if (temp == NULL) {
@@ -224,10 +224,12 @@ int main() {
 
         switch (menu_option) {
             case 1:
-                introduction_of_delivery_notes(items, number_of_items, delivery_notes, &number_of_delivery_notes, delivery_note_item_counts);
+                introduction_of_delivery_notes(items, number_of_items, delivery_notes, &number_of_delivery_notes,
+                                               delivery_note_item_counts);
                 break;
             case 2:
-                invoice_preparation(items, number_of_items, delivery_notes, &number_of_delivery_notes, delivery_note_item_counts);
+                invoice_preparation(items, number_of_items, delivery_notes, &number_of_delivery_notes,
+                                    delivery_note_item_counts);
                 break;
             case 3:
                 introduce_new_item(&items, &number_of_items);
